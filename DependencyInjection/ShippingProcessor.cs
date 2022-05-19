@@ -1,12 +1,23 @@
 ﻿namespace DependencyInjection
 {
-    public class ShippingProcessor
+    public interface IShippingProcessor
     {
-        internal void MailProduct(Product product)
+        void MailProduct(Product product);
+    }
+
+    public class ShippingProcessor : IShippingProcessor
+    {
+        private readonly IProductStockRepository _productStockRepository;
+
+        public ShippingProcessor(IProductStockRepository productStockRepository)
         {
-            var productStockRepository = new ProductStockRepository();
-            productStockRepository.ReduceStock(product);
-            Console.WriteLine("Call to shipping API");
+            _productStockRepository = productStockRepository;
+        }
+
+        public void MailProduct(Product product)
+        {
+            _productStockRepository.ReduceStock(product);
+            Console.WriteLine("Call to Shipping API");
         }
     }
 }

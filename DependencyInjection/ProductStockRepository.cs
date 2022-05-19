@@ -2,10 +2,15 @@
 using System.Collections.Generic;
 namespace DependencyInjection
 {
-    public class ProductStockRepository
+    public interface IProductStockRepository
     {
+        bool IsInStock(Product product);
+        void ReduceStock(Product product);
+        void AddStock(Product product);
 
-        
+    }
+        public class ProductStockRepository : IProductStockRepository
+    {
         public static Dictionary<Product, int> _productStockDatabase = Setup();
         public static Dictionary<Product, int> Setup()
         {
